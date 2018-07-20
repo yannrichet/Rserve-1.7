@@ -1,6 +1,8 @@
 #!/bin/sh
 
 SWD=`pwd`
+ls
+
 echo "Removing previous dist ..."
 rm -rf /tmp/Rserve-1.7.tmp
 echo "Copying package base ..."
