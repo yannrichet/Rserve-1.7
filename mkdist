@@ -2,15 +2,15 @@
 
 SWD=`pwd`
 echo "Removing previous dist ..."
-rm -rf /tmp/Rserve.tmp
+rm -rf /tmp/Rserve_1.7.tmp
 echo "Copying package base ..."
 mkdir /tmp/Rserve.tmp
-cp -r ../Rserve /tmp/Rserve.tmp
+cp -r ../Rserve_1.7 /tmp/Rserve_1.7.tmp
 
 #touch /tmp/Rserve/src/dummy.so
-rm -f /tmp/Rserve.tmp/Rserve/mkdist
+rm -f /tmp/Rserve_1.7.tmp/Rserve_1.7/mkdist
 
-cd /tmp/Rserve.tmp/Rserve
+cd /tmp/Rserve_1.7.tmp/Rserve_1.7
 # mkdir inst
 if [ -e configure ]; then
   echo "Note: configure exists, no attempt to reconfigure will be made."
@@ -22,8 +22,8 @@ else
   rm -rf autom4te* aclocal*
 fi
 
-echo "Removing CVS/SVN and backup stuff ..."
-find . -name CVS -o -name \*~ -o -name .svn -o -name .git\*|xargs rm -rf
+#echo "Removing CVS/SVN and backup stuff ..."
+#find . -name CVS -o -name \*~ -o -name .svn -o -name .git\*|xargs rm -rf
 
 # copy header files so they are available to the client
 cp src/Rsrv.h src/include/sisocks.h src/client/cxx/
@@ -36,7 +36,7 @@ if [ -e src/client/cxx/configure.ac ]; then
 	autoheader
 	autoconf
 	rm -rf autom4te* aclocal*
-	cd /tmp/Rserve.tmp/Rserve
+	cd /tmp/Rserve_1.7.tmp/Rserve_1.7
     fi
 fi
 
@@ -69,17 +69,17 @@ echo "Creating package ..."
 cd ..
 # do NOT use build - it screws up symbolic links
 #R CMD build --force Rserve
-tar fcz Rserve_${VER}.tar.gz Rserve
+tar fcz Rserve_1.7_${VER}.tar.gz Rserve_1.7
 cd ${SWD}
-cp /tmp/Rserve.tmp/Rserve_${VER}.tar.gz ..
-rm -rf /tmp/Rserve.tmp
+cp /tmp/Rserve_1.7.tmp/Rserve_1.7_${VER}.tar.gz ..
+rm -rf /tmp/Rserve_1.7.tmp
 echo "Done."
-ls -l ../Rserve_${VER}.tar.gz
+ls -l ../Rserve_1.7_${VER}.tar.gz
 
 if [ "x$1" = x-i ]; then
-    R CMD INSTALL ../Rserve_${VER}.tar.gz
+    R CMD INSTALL ../Rserve_1.7_${VER}.tar.gz
 fi
 
 if [ "x$1" = x-c ]; then
-    R CMD check $2 $3 $4 ../Rserve_${VER}.tar.gz
+    R CMD check $2 $3 $4 ../Rserve_1.7_${VER}.tar.gz
 fi
