@@ -41,7 +41,7 @@ before_build:
   - cd Rserve
   
 after_build:
-  - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. && echo `ls`"'
+  - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/../Rserve && echo `ls`"'
   - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/../Rserve && cp Rserve* $APPVEYOR_BUILD_FOLDER/."'
   
 test_script:
