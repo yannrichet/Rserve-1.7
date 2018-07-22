@@ -7,12 +7,12 @@ echo "Removing previous dist ..."
 rm -rf /tmp/Rserve-1.7.tmp
 echo "Copying package base ..."
 mkdir /tmp/Rserve-1.7.tmp
-cp -r ../Rserve-1.7 /tmp/Rserve-1.7.tmp
+cp -r ../Rserve-1-7* /tmp/Rserve-1.7.tmp
 
 #touch /tmp/Rserve/src/dummy.so
-rm -f /tmp/Rserve-1.7.tmp/Rserve-1.7/mkdist
+rm -f /tmp/Rserve-1.7.tmp/Rserve-1-7*/mkdist
 
-cd /tmp/Rserve-1.7.tmp/Rserve-1.7
+cd /tmp/Rserve-1.7.tmp/Rserve-1-7*
 # mkdir inst
 if [ -e configure ]; then
   echo "Note: configure exists, no attempt to reconfigure will be made."
@@ -38,7 +38,7 @@ if [ -e src/client/cxx/configure.ac ]; then
 	autoheader
 	autoconf
 	rm -rf autom4te* aclocal*
-	cd /tmp/Rserve-1.7.tmp/Rserve-1.7
+	cd /tmp/Rserve-1.7.tmp/Rserve-1-7*
     fi
 fi
 
