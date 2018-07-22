@@ -39,7 +39,10 @@ before_build:
   - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. ; mv Rserve* Rserve_src; tar zxvf Rserve_*.tar.gz"'
   - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. && echo `ls -la`"'
   - cd Rserve
-
+  
+after_build:
+  - '%CYG_BASH% -lc "cp -r $APPVEYOR_BUILD_FOLDER/../Rserve $APPVEYOR_BUILD_FOLDER"'
+  
 test_script:
   - travis-tool.sh run_tests
 
@@ -48,29 +51,29 @@ on_failure:
   - appveyor PushArtifact failure.zip
 
 artifacts:
-  - path: '..\Rserve\*.Rcheck\**\*.log'
+  - path: 'Rserve\*.Rcheck\**\*.log'
     name: log
 
-  - path: '..\Rserve\*.Rcheck\**\*.out'
+  - path: 'Rserve\*.Rcheck\**\*.out'
     name: log
 
-  - path: '..\Rserve\*.Rcheck\**\*.fail'
+  - path: 'Rserve\*.Rcheck\**\*.fail'
     name: log
 
-  - path: '..\Rserve\*.Rcheck\**\*.Rout'
+  - path: 'Rserve\*.Rcheck\**\*.Rout'
     name: log
 
-  - path: '..\Rserve\*_*.tar.gz'
+  - path: 'Rserve\*_*.tar.gz'
     name: src
 
-  - path: '..\Rserve\*_*.zip'
+  - path: 'Rserve\*_*.zip'
     name: bin
     type: zip
 
 before_deploy:
      - git tag %VERSION_RELEASE%
      - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. && echo `ls -la`"'
-     - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/../Rserve && echo `ls -la`"'
+     - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/Rserve && echo `ls -la`"'
 
 deploy:
   provider: GitHub
