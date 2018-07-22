@@ -19,7 +19,7 @@ before_script:
   - cd ..; mv Rserve* Rserve; cd Rserve
   - echo `ls -la`
   - sh mkdist -i
-  - cd ..; mv Rserve Rserve-src
+  - cd ..; mv Rserve Rserve-src; tar zxvf Rserve_*.tar.gz
   - echo `ls -la`
   - cd Rserve
 
