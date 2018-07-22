@@ -10,7 +10,9 @@ install:
   - ps: Bootstrap
 
 # Adapt as necessary starting from here
+platform: x64
 environment:
+  R_ARCH: x64
   global:
       CYG_ROOT: C:\cygwin64
       CYG_MIRROR: http://cygwin.mirror.constant.com
@@ -67,7 +69,8 @@ artifacts:
 
 before_deploy:
      - git tag %VERSION_RELEASE%
-     - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. && R CMD INSTALL --build Rserve"'
+     - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. && echo `ls -la`"'
+     - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. && R CMD build Rserve"'
 
 deploy:
   provider: GitHub
