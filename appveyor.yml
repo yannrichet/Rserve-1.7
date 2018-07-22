@@ -34,7 +34,7 @@ before_build:
   - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER && sh mkdist"'
   - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. && echo `ls -la`"'
   - cd ..
-  - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. ; mv Rserve-1.7 Rserve-1.7_src; tar zxvf Rserve_*.tar.gz"'
+  - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. ; mv Rserve-1-7* Rserve-1.7_src; tar zxvf Rserve-1.7_*.tar.gz"'
   - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. && echo `ls -la`"'
   - cd Rserve-1.7
 
