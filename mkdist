@@ -4,15 +4,15 @@ SWD=`pwd`
 echo `ls ..`
 
 echo "Removing previous dist ..."
-rm -rf /tmp/Rserve-1.7.tmp
+rm -rf /tmp/Rserve.tmp
 echo "Copying package base ..."
-mkdir /tmp/Rserve-1.7.tmp
-cp -r ../Rserve* /tmp/Rserve-1.7.tmp
+mkdir /tmp/Rserve.tmp
+cp -r ../Rserve /tmp/Rserve.tmp
 
 #touch /tmp/Rserve/src/dummy.so
-rm -f /tmp/Rserve-1.7.tmp/Rserve*/mkdist
+rm -f /tmp/Rserve.tmp/Rserve/mkdist
 
-cd /tmp/Rserve-1.7.tmp/Rserve*
+cd /tmp/Rserve.tmp/Rserve
 # mkdir inst
 if [ -e configure ]; then
   echo "Note: configure exists, no attempt to reconfigure will be made."
@@ -38,7 +38,7 @@ if [ -e src/client/cxx/configure.ac ]; then
 	autoheader
 	autoconf
 	rm -rf autom4te* aclocal*
-	cd /tmp/Rserve-1.7.tmp/Rserve*
+	cd /tmp/Rserve.tmp/Rserve*
     fi
 fi
 
@@ -71,17 +71,17 @@ echo "Creating package ..."
 cd ..
 # do NOT use build - it screws up symbolic links
 #R CMD build --force Rserve
-tar fcz Rserve-1.7_${VER}.tar.gz Rserve*
+tar fcz Rserve_${VER}.tar.gz Rserve*
 cd ${SWD}
-cp /tmp/Rserve-1.7.tmp/Rserve-1.7_${VER}.tar.gz ..
-rm -rf /tmp/Rserve-1.7.tmp
+cp /tmp/Rserve.tmp/Rserve_${VER}.tar.gz ..
+rm -rf /tmp/Rserve.tmp
 echo "Done."
-ls -l ../Rserve-1.7_${VER}.tar.gz
+ls -l ../Rserve_${VER}.tar.gz
 
 if [ "x$1" = x-i ]; then
-    R CMD INSTALL ../Rserve-1.7_${VER}.tar.gz
+    R CMD INSTALL ../Rserve_${VER}.tar.gz
 fi
 
 if [ "x$1" = x-c ]; then
-    R CMD check $2 $3 $4 ../Rserve-1.7_${VER}.tar.gz
+    R CMD check $2 $3 $4 ../Rserve_${VER}.tar.gz
 fi
