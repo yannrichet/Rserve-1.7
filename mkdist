@@ -1,18 +1,18 @@
 #!/bin/sh
 
 SWD=`pwd`
-echo `ls`
+echo `ls ..`
 
 echo "Removing previous dist ..."
 rm -rf /tmp/Rserve-1.7.tmp
 echo "Copying package base ..."
 mkdir /tmp/Rserve-1.7.tmp
-cp -r ../Rserve-1-7* /tmp/Rserve-1.7.tmp
+cp -r ../Rserve* /tmp/Rserve-1.7.tmp
 
 #touch /tmp/Rserve/src/dummy.so
-rm -f /tmp/Rserve-1.7.tmp/Rserve-1-7*/mkdist
+rm -f /tmp/Rserve-1.7.tmp/Rserve*/mkdist
 
-cd /tmp/Rserve-1.7.tmp/Rserve-1-7*
+cd /tmp/Rserve-1.7.tmp/Rserve*
 # mkdir inst
 if [ -e configure ]; then
   echo "Note: configure exists, no attempt to reconfigure will be made."
@@ -38,7 +38,7 @@ if [ -e src/client/cxx/configure.ac ]; then
 	autoheader
 	autoconf
 	rm -rf autom4te* aclocal*
-	cd /tmp/Rserve-1.7.tmp/Rserve-1-7*
+	cd /tmp/Rserve-1.7.tmp/Rserve*
     fi
 fi
 
@@ -71,7 +71,7 @@ echo "Creating package ..."
 cd ..
 # do NOT use build - it screws up symbolic links
 #R CMD build --force Rserve
-tar fcz Rserve-1.7_${VER}.tar.gz Rserve-1.7
+tar fcz Rserve-1.7_${VER}.tar.gz Rserve*
 cd ${SWD}
 cp /tmp/Rserve-1.7.tmp/Rserve-1.7_${VER}.tar.gz ..
 rm -rf /tmp/Rserve-1.7.tmp
