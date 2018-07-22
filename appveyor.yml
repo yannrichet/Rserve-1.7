@@ -43,6 +43,7 @@ before_build:
   - cd Rserve
 
 after_build:
+  - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER && R CMD INSTALL --build Rserve"'
   - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. && cp Rserve*.zip rserve-1-7-wc3jp"'
 
 test_script:
@@ -76,7 +77,6 @@ before_deploy:
      - git tag %VERSION_RELEASE%
      - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER && echo `ls`"'
      - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/Rserve && echo `ls`"'
-     - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER && R CMD INSTALL --build Rserve"'
 
 deploy:
   provider: GitHub
