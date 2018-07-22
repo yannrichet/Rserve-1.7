@@ -60,10 +60,10 @@ artifacts:
   - path: '*.Rcheck\**\*.Rout'
     name: log
 
-  - path: '*.Rcheck\**\*_*.tar.gz'
+  - path: 'Rserve\**\*_*.tar.gz'
     name: src
 
-  - path: '*.Rcheck\**\*_*.zip'
+  - path: 'Rserve\**\*_*.zip'
     name: bin
     type: zip
 
