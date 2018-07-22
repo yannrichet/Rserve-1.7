@@ -69,6 +69,7 @@ artifacts:
 
 before_deploy:
      - git tag %VERSION_RELEASE%
+     - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. && echo `ls -la`"'
 
 deploy:
   provider: GitHub
