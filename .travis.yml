@@ -16,10 +16,10 @@ addons:
 
 before_script:
   - echo `ls -la`
-  - mv Rserve* Rserve
+  - cd ..; mv Rserve* Rserve; cd Rserve
   - echo `ls -la`
-  - sh mkdist
-  - cd ..; mv Rserve Rserve_src; tar zxvf Rserve_*.tar.gz
+  - sh mkdist -i
+  - cd ..; mv Rserve Rserve-src
   - echo `ls -la`
   - cd Rserve
 
