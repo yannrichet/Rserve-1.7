@@ -10,13 +10,9 @@ install:
   - ps: Bootstrap
 
 # Adapt as necessary starting from here
-platform: 
-  - x64
-  - x86
+platform: x64
 environment:
-  R_ARCH: 
-    - x64
-    - x86
+  R_ARCH: x64
   global:
       CYG_ROOT: C:\cygwin64
       CYG_MIRROR: http://cygwin.mirror.constant.com
@@ -37,7 +33,7 @@ before_build:
   - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. && echo `ls -la`"'
   - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. && cp -r rserve-1-7-wc3jp Rserve; cd Rserve"'
   - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. && echo `ls -la`"'
-  - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER && sh mkdist -i"'
+  - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER && sh mkdist"'
   - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. && echo `ls -la`"'
   - cd ..
   - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. ; mv Rserve* Rserve_src; tar zxvf Rserve_*.tar.gz"'
@@ -73,8 +69,6 @@ artifacts:
 
 before_deploy:
      - git tag %VERSION_RELEASE%
-     - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. && echo `ls -la`"'
-     - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. && R CMD INSTALL --build Rserve"'
 
 deploy:
   provider: GitHub
