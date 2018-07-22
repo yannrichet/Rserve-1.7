@@ -1,7 +1,7 @@
 #!/bin/sh
 
 SWD=`pwd`
-ls
+echo `ls`
 
 echo "Removing previous dist ..."
 rm -rf /tmp/Rserve-1.7.tmp
