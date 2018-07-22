@@ -31,7 +31,7 @@ build_script:
 
 before_build:
   - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. && echo `ls -la`"'
-  - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. && cd ..; mv Rserve* Rserve; cd Rserve"'
+  - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. && cd ..; mv rserve-1-7-wc3jp Rserve; cd Rserve"'
   - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. && echo `ls -la`"'
   - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER && sh mkdist -i"'
   - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. && echo `ls -la`"'
