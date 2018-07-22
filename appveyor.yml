@@ -48,22 +48,22 @@ on_failure:
   - appveyor PushArtifact failure.zip
 
 artifacts:
-  - path: '*.Rcheck\**\*.log'
+  - path: '..\Rserve\*.Rcheck\**\*.log'
     name: log
 
-  - path: '*.Rcheck\**\*.out'
+  - path: '..\Rserve\*.Rcheck\**\*.out'
     name: log
 
-  - path: '*.Rcheck\**\*.fail'
+  - path: '..\Rserve\*.Rcheck\**\*.fail'
     name: log
 
-  - path: '*.Rcheck\**\*.Rout'
+  - path: '..\Rserve\*.Rcheck\**\*.Rout'
     name: log
 
-  - path: 'Rserve\*_*.tar.gz'
+  - path: '..\Rserve\*_*.tar.gz'
     name: src
 
-  - path: 'Rserve\*_*.zip'
+  - path: '..\Rserve\*_*.zip'
     name: bin
     type: zip
 
