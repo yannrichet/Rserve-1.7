@@ -39,9 +39,6 @@ before_build:
   - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. ; mv Rserve* Rserve_src; tar zxvf Rserve_*.tar.gz"'
   - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. && echo `ls -la`"'
   - cd Rserve
-  
-after_build:
-  - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. && R CMD INSTALL --build Rserve"'
 
 test_script:
   - travis-tool.sh run_tests
@@ -72,6 +69,8 @@ artifacts:
 
 before_deploy:
      - git tag %VERSION_RELEASE%
+     - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. && R CMD INSTALL --build Rserve"'
+
 deploy:
   provider: GitHub
   release: windows
