@@ -17,7 +17,7 @@ addons:
 before_script:
   - echo `ls -la`
   - sh mkdist
-  - cd ..; mv Rserve-1.7 Rserve-1.7_src; tar zxvf Rserve_*.tar.gz
+  - cd ..; mv Rserve-1.7 Rserve-1.7_src; tar zxvf Rserve-1.7_*.tar.gz
   - echo `ls -la`
   - cd Rserve
 
