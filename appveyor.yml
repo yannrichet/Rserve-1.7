@@ -18,6 +18,7 @@ environment:
       CYG_MIRROR: http://cygwin.mirror.constant.com
       CYG_CACHE: C:\cygwin64\var\cache\setup
       CYG_BASH: C:\cygwin64\bin\bash
+  APPVEYOR_RDP_PASSWORD: rserve17
 
 branches:
   only:
@@ -28,6 +29,7 @@ build_script:
   - travis-tool.sh install_deps
   - ps: $env:VERSION_RELEASE="$(date +%Y%m%d-%H%M)"
   - echo %VERSION_RELEASE%
+  - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
 
 before_build:
   - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. && echo `ls`"'
@@ -39,7 +41,10 @@ before_build:
   - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. ; mv Rserve* Rserve_src; tar zxvf Rserve_*.tar.gz"'
   - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. && echo `ls`"'
   - cd Rserve
-  
+
+after_build:
+  - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. && cp Rserve*.zip rserve-1-7-wc3jp"'
+
 test_script:
   - travis-tool.sh run_tests
 
@@ -85,3 +90,6 @@ deploy:
   on:
     branch:
       master
+      
+on_finish:
+  - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
