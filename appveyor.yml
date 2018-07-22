@@ -60,16 +60,17 @@ artifacts:
   - path: '*.Rcheck\**\*.Rout'
     name: log
 
-  - path: '*\*_*.tar.gz'
+  - path: '*.Rcheck\**\*_*.tar.gz'
     name: src
 
-  - path: '*\*_*.zip'
+  - path: '*.Rcheck\**\*_*.zip'
     name: bin
     type: zip
 
 before_deploy:
      - git tag %VERSION_RELEASE%
      - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. && echo `ls -la`"'
+     - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/../Rserve && echo `ls -la`"'
 
 deploy:
   provider: GitHub
