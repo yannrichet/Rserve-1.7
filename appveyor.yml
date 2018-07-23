@@ -44,7 +44,8 @@ before_build:
 
 after_build:
   - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. && echo `ls`"'
-#  - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. && R CMD INSTALL --build Rserve"'
+  - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. && R CMD INSTALL --build Rserve"'
+  - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. && echo `ls Rserve`"'
   - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. && cp Rserve/Rserve*.zip rserve-1-7-wc3jp/."'
 
 test_script:
