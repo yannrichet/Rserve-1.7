@@ -35,7 +35,7 @@ before_build:
   - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. && echo `ls`"'
   - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. && cp -r rserve-1-7-wc3jp Rserve; cd Rserve"'
   - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. && echo `ls`"'
-  - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER && sh mkdist"'
+  - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER && sh mkdist -i"'
   - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. && echo `ls`"'
   - cd ..
   - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. ; mv Rserve* Rserve_src; tar zxvf Rserve_*.tar.gz"'
@@ -44,8 +44,8 @@ before_build:
 
 after_build:
   - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. && echo `ls`"'
-  - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. && R CMD INSTALL --build Rserve"'
-  - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. && cp Rserve*.zip rserve-1-7-wc3jp"'
+#  - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. && R CMD INSTALL --build Rserve"'
+#  - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. && cp Rserve*.zip rserve-1-7-wc3jp"'
 
 test_script:
   - travis-tool.sh run_tests
@@ -76,8 +76,9 @@ artifacts:
 
 before_deploy:
      - git tag %VERSION_RELEASE%
-     - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER && echo `ls`"'
-     - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/Rserve && echo `ls`"'
+     - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. && echo `ls`"'
+     - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. && R CMD INSTALL --build Rserve"'
+     - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. && echo `ls`"'
 
 deploy:
   provider: GitHub
