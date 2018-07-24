@@ -32,7 +32,7 @@ before_build:
   - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER && sh mkdist -i"'
   - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. && echo `ls`"'
   - cd ..
-  - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. ; mv Rserve* Rserve_src; tar zxvf Rserve_*.tar.gz"; mv Rserve_*.tar.gz src_Rserve_tar.gz'
+  - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. ; mv Rserve* Rserve_src; tar zxvf Rserve_*.tar.gz; mv Rserve_*.tar.gz src_Rserve_tar.gz"'
   - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. && echo `ls`"'
   - cd Rserve
 
@@ -44,7 +44,9 @@ build_script:
 
 after_build:
   - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. && echo `ls`"'
-  - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. && R CMD INSTALL --build --merge-multiarch Rserve"'
+  - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. && R CMD build Rserve"'
+  - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. && echo `ls`"'
+  - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. && R CMD INSTALL --build --merge-multiarch Rserve_*.tar.gz"'
   - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. && echo `ls Rserve`"'
   - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. && cp Rserve/Rserve*.zip rserve-1-7-wc3jp/."'
 
