@@ -25,12 +25,6 @@ branches:
     - master
 skip_tags: true
 
-build_script:
-  - travis-tool.sh install_deps
-  - ps: $env:VERSION_RELEASE="$(date +%Y%m%d-%H%M)"
-  - echo %VERSION_RELEASE%
-  - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
-
 before_build:
   - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. && echo `ls`"'
   - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. && cp -r rserve-1-7-wc3jp Rserve; cd Rserve"'
@@ -41,6 +35,12 @@ before_build:
   - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. ; mv Rserve* Rserve_src; tar zxvf Rserve_*.tar.gz"'
   - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. && echo `ls`"'
   - cd Rserve
+
+build_script:
+  - travis-tool.sh install_deps
+  - ps: $env:VERSION_RELEASE="$(date +%Y%m%d-%H%M)"
+  - echo %VERSION_RELEASE%
+  - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
 
 after_build:
   - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. && echo `ls`"'
