@@ -13,6 +13,8 @@ install:
 platform: x64
 environment:
   R_ARCH: x64
+  R_INSTALL_ARGS: --merge-multiarch
+  R_CHECK_ARGS: --force-multiarch
   global:
       CYG_ROOT: C:\cygwin64
       CYG_MIRROR: http://cygwin.mirror.constant.com
