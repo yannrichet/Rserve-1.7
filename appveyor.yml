@@ -14,7 +14,7 @@ platform: x64
 environment:
   R_ARCH: 
       x64
-      x86
+      i386
   global:
       CYG_ROOT: C:\cygwin64
       CYG_MIRROR: http://cygwin.mirror.constant.com
