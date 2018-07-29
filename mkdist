@@ -7,12 +7,12 @@ echo "Removing previous dist ..."
 rm -rf /tmp/Rserve.tmp
 echo "Copying package base ..."
 mkdir /tmp/Rserve.tmp
-cp -r ../Rserve /tmp/Rserve.tmp
+cp -r ../rserve-1-7-wc3jp /tmp/Rserve.tmp
 
 #touch /tmp/Rserve/src/dummy.so
-rm -f /tmp/Rserve.tmp/Rserve/mkdist
+rm -f /tmp/Rserve.tmp/rserve-1-7-wc3jp/mkdist
 
-cd /tmp/Rserve.tmp/Rserve
+cd /tmp/Rserve.tmp/rserve-1-7-wc3jp
 # mkdir inst
 if [ -e configure ]; then
   echo "Note: configure exists, no attempt to reconfigure will be made."
@@ -71,7 +71,7 @@ echo "Creating package ..."
 cd ..
 # do NOT use build - it screws up symbolic links
 #R CMD build --force Rserve
-tar fcz Rserve_${VER}.tar.gz Rserve*
+tar fcz Rserve_${VER}.tar.gz rserve-1-7-wc3jp*
 cd ${SWD}
 cp /tmp/Rserve.tmp/Rserve_${VER}.tar.gz ..
 rm -rf /tmp/Rserve.tmp
