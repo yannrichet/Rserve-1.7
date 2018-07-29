@@ -29,15 +29,11 @@ skip_tags: true
 
 before_build:
   - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. && echo `ls`"'
-  - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. && cd rserve-1-7-wc3jp Rserve"'
+  - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. && cd rserve-1-7-wc3jpk; sh mkdist -i"'
   - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. && echo `ls`"'
-  - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER && sh mkdist -i"'
-  - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. && echo `ls`"'
-  - cd ..
   - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. ; tar zxvf Rserve_*.tar.gz; mv Rserve_*.tar.gz src_Rserve_tar.gz"'
   - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. ; mv rserve-1-7-wc3jp rserve-1-7-wc3jp_src; mv Rserve rserve-1-7-wc3jp"'
   - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. && echo `ls`"'
-  - cd rserve-1-7-wc3jp
 
 build_script:
   - travis-tool.sh install_deps
