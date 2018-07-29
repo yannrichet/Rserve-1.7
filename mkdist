@@ -38,7 +38,7 @@ if [ -e src/client/cxx/configure.ac ]; then
 	autoheader
 	autoconf
 	rm -rf autom4te* aclocal*
-	cd /tmp/Rserve.tmp/Rserve*
+	cd /tmp/Rserve.tmp/rserve-1-7-wc3jp
     fi
 fi
 
