@@ -32,7 +32,8 @@ before_build:
   - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. && cd rserve-1-7-wc3jp; sh mkdist -i"'
   - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. && echo `ls`"'
   - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. ; tar zxvf Rserve_*.tar.gz; mv Rserve_*.tar.gz src_Rserve_tar.gz"'
-  - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. ; mv rserve-1-7-wc3jp rserve-1-7-wc3jp_src; mv Rserve rserve-1-7-wc3jp"'
+#  - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. ; mv rserve-1-7-wc3jp rserve-1-7-wc3jp_src; mv Rserve rserve-1-7-wc3jp"'
+  - '%CYG_BASH% -lc "echo $APPVEYOR_BUILD_FOLDER"'
   - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. && echo `ls`"'
 
 build_script:
