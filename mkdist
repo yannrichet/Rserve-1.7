@@ -72,7 +72,7 @@ echo "Creating package ..."
 cd ..
 # do NOT use build - it screws up symbolic links
 #R CMD build --force Rserve
-tar fcz Rserve_${VER}.tar.gz rserve-1-7-wc3jp*
+tar fcz Rserve_${VER}.tar.gz $RSERVE*
 cd ${SWD}
 cp /tmp/Rserve.tmp/Rserve_${VER}.tar.gz ..
 rm -rf /tmp/Rserve.tmp
