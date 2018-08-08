@@ -23,7 +23,7 @@ environment:
       CYG_CACHE: C:\cygwin64\var\cache\setup
       CYG_BASH: C:\cygwin64\bin\bash
   RSERVE: rserve-1-7-wc3jp
-  APPVEYOR_RDP_PASSWORD: Rserve_1-7
+#  APPVEYOR_RDP_PASSWORD: Rserve_1-7
 
 branches:
   only:
@@ -35,28 +35,18 @@ before_build:
   - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. && cd rserve-1-7-wc3jp; sh mkdist -i"'
   - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. && echo `ls`"'
   - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. ; tar zxvf Rserve_*.tar.gz; mv Rserve_*.tar.gz src_Rserve_tar.gz"'
-#  - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. ; mv rserve-1-7-wc3jp rserve-1-7-wc3jp_src; mv Rserve rserve-1-7-wc3jp"'
-  - '%CYG_BASH% -lc "echo $APPVEYOR_BUILD_FOLDER"'
   - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. && echo `ls`"'
 
 build_script:
   - travis-tool.sh install_deps
   - ps: $env:VERSION_RELEASE="$(date +%Y%m%d-%H%M)"
   - echo %VERSION_RELEASE%
-  - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
-
-after_build:
-  - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. && echo `ls`"'
-#  - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. && R CMD build Rserve"'
-#  - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. && echo `ls`"'
-#  - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. && R CMD INSTALL --build --merge-multiarch Rserve_*.tar.gz"'
-#  - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. && echo `ls Rserve`"'
-#  - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. && cp Rserve/Rserve*.zip rserve-1-7-wc3jp/."'
 
 test_script:
   - travis-tool.sh run_tests
 
 on_failure:
+#  - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
   - 7z a failure.zip *.Rcheck\*
   - appveyor PushArtifact failure.zip
 
@@ -82,8 +72,6 @@ artifacts:
 
 before_deploy:
      - git tag %VERSION_RELEASE%
-#     - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. && R CMD INSTALL --build Rserve"'
-     - '%CYG_BASH% -lc "cd $APPVEYOR_BUILD_FOLDER/.. && echo `ls`"'
 
 deploy:
   provider: GitHub
@@ -98,5 +86,5 @@ deploy:
     branch:
       master
       
-on_finish:
-  - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+#on_finish:
+#  - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
