@@ -8,6 +8,8 @@ init:
         Import-Module '..\appveyor-tool.ps1'
 install:
   - ps: Bootstrap
+  - ps: choco install -y miktex
+  - cmd:  refreshenv
 
 # Adapt as necessary starting from here
 platform: x64
