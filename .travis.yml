@@ -20,7 +20,7 @@ before_script:
   - echo `ls -la`
   - cd ..; mv Rserve* Rserve; cd Rserve; sh mkdist -i
   - echo `ls -la`
-  - cd ..; mv Rserve Rserve-src; tar zxvf Rserve_*.tar.gz
+  - cd ..; mv Rserve Rserve-src; tar zxvf Rserve_*.tar.gz; cd Rserve
   - echo `ls -la`
 
 before_install:
