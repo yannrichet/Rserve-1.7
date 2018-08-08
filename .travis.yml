@@ -5,6 +5,8 @@ warnings_are_errors: false
 os:
   - linux
   - osx
+env:
+  - RSERVE=Rserve
 branches:
   only:
     master
@@ -16,17 +18,12 @@ addons:
 
 before_script:
   - echo `ls -la`
-  - cd ..; mv Rserve* Rserve; cd Rserve
+  - cd ..; mv Rserve* Rserve; cd Rserve; sh mkdist -i
   - echo `ls -la`
-  - sh mkdist -i
   - cd ..; mv Rserve Rserve-src; tar zxvf Rserve_*.tar.gz
   - echo `ls -la`
-  - cd Rserve
 
 before_install:
-  - echo "$TRAVIS_OS_NAME"
-  - echo "$TRAVIS_R_VERSION_STRING"
-  - echo $PKG_TARBALL
   - if [ "$TRAVIS_OS_NAME" = "osx" ]; then sudo chown -R $(whoami) /usr/local ; brew install libgit2; fi
   
 after_success:
@@ -48,4 +45,3 @@ deploy:
   on:
     branch: master
     except: windows
-    condition: "$TRAVIS_R_VERSION_STRING = release"
