@@ -25,6 +25,8 @@ before_script:
   - echo `ls -la`
   - cd ..; mv Rserve Rserve-src; tar zxvf Rserve_*.tar.gz; cd Rserve
   - echo `ls -la`
+  - Rscript -e "install.packages('testthat', repos='https://cran.rstudio.com', INSTALL_opts='', type='both')"
+  - Rscript -e "install.packages('RSclient', repos='https://cran.rstudio.com', INSTALL_opts='', type='both')"
 
 before_install:
   - if [ "$TRAVIS_OS_NAME" = "osx" ]; then sudo chown -R $(whoami) /usr/local ; brew install libgit2; fi
