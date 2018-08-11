@@ -1,6 +1,9 @@
 language: r
 r:
   - release
+r_packages:
+  - testthat
+  - RSclient
 warnings_are_errors: false
 os:
   - linux
