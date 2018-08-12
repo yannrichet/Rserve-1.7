@@ -43,7 +43,7 @@ build_script:
   - echo %VERSION_RELEASE%
 
 test_script:
-  - cmd: Rscript -e "install.packages('RSclient', repos='https://cran.rstudio.com', INSTALL_opts='', type='both'); q(save='no')"
+#  - cmd: Rscript -e "install.packages('RSclient', repos='https://cran.rstudio.com', INSTALL_opts='', type='both'); q(save='no')"
   - travis-tool.sh run_tests
 
 on_failure:
