@@ -3,7 +3,7 @@ library("RSclient")
 c = RS.connect()
 
 
-RS.server.shutdown(c)
+try(RS.server.shutdown(c))
 RS.close(c)
 
 # hard end... (to be sure)
