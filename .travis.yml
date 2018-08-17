@@ -27,7 +27,7 @@ before_script:
 
 before_install:
   - if [ "$TRAVIS_OS_NAME" = "osx" ]; then sudo chown -R $(whoami) /usr/local ; brew install libgit2; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew reinstall gcc8; brew reinstall r; brew link --overwrite r; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sudo chown -R $(whoami) /usr/local; brew reinstall gcc8; brew reinstall r; fi
   
 after_success:
   - if [[ "$TRAVIS_R_VERSION_STRING" == "release" && ("$TRAVIS_OS_NAME" == "linux") ]]; then Rscript -e 'covr::codecov()'; fi
