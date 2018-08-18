@@ -25,6 +25,9 @@ before_script:
   - cd ..; mv Rserve Rserve-src; tar zxvf Rserve_*.tar.gz; cd Rserve
   - echo `ls -la`
 
+after_script:
+  - cd tests; ./test-RserveBugJava.sh
+
 before_install:
   - if [ "$TRAVIS_OS_NAME" = "osx" ]; then sudo chown -R $(whoami) /usr/local ; brew install libgit2; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sudo chown -R $(whoami) /usr/local; brew reinstall gcc8; brew reinstall r; fi
