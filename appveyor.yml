@@ -43,6 +43,7 @@ build_script:
   - echo %VERSION_RELEASE%
 
 test_script:
+  - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
   - Rscript -e "install.packages('RSclient', repos='https://cran.rstudio.com', INSTALL_opts='', type='both'); q(save='no')"
   - travis-tool.sh run_tests
   - cd %APPVEYOR_BUILD_FOLDER%
@@ -50,7 +51,6 @@ test_script:
   - test-RserveBugJava.bat
 
 on_failure:
-  - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
   - 7z a failure.zip *.Rcheck\*
   - appveyor PushArtifact failure.zip
 
@@ -90,5 +90,5 @@ deploy:
     branch:
       master
 
-#on_finish:
-#  - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+on_finish:
+  - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
