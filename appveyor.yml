@@ -45,7 +45,7 @@ build_script:
 test_script:
 #  - cmd: Rscript -e "install.packages('RSclient', repos='https://cran.rstudio.com', INSTALL_opts='', type='both'); q(save='no')"
   - travis-tool.sh run_tests
-  - cd $APPVEYOR_BUILD_FOLDER
+  - cd %APPVEYOR_BUILD_FOLDER%
   - cd tests
   - test-RserveBugJava.bat
 
