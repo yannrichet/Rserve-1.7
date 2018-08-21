@@ -14,6 +14,7 @@ public class RserveBug {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws RserveException, REXPMismatchException {
+        
         RConnection c = new RConnection();
         try {
             REXP array43 = c.eval("array(0,c(4,3))");
@@ -21,11 +22,19 @@ public class RserveBug {
         } catch (Exception e) {
             e.printStackTrace();
             System.err.println("ERROR: " + e);
-            c.serverShutdown();
+            try {
+              c.serverShutdown();
+            } catch (RserveException ee) {
+              System.err.println("WARNING: " + ee);
+            }
             System.exit(1);
         }
         System.err.println("SUCCESS.");
-        c.serverShutdown();
+        try {
+           c.serverShutdown();
+        } catch (RserveException ee) {
+          System.err.println("WARNING: " + ee);
+        }
         System.exit(0);
     }
 
