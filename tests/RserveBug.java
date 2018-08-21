@@ -19,6 +19,7 @@ public class RserveBug {
             REXP array43 = c.eval("array(0,c(4,3))");
             double[][] m43 = array43.asDoubleMatrix();
         } catch (Exception e) {
+            e.printStackTrace();
             System.err.println("ERROR: " + e);
             c.serverShutdown();
             System.exit(1);
