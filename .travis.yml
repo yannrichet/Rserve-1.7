@@ -20,6 +20,9 @@ addons:
     packages:
       - libssh2-1-dev
 
+before_install:
+  - if [ "$TRAVIS_OS_NAME" = "osx" ]; then sudo chown -R $(whoami) /usr/local ; brew install libgit2; fi
+  
 before_script:
   - echo `ls -la`
   - cd ..; mv Rserve* Rserve; cd Rserve; sh mkdist -i
@@ -28,10 +31,9 @@ before_script:
   - echo `ls -la`
 
 after_script:
+  - ps ax | grep Rserve
   - cd tests; bash test-RserveBugJava.sh || travis_terminate 1;
-
-before_install:
-  - if [ "$TRAVIS_OS_NAME" = "osx" ]; then sudo chown -R $(whoami) /usr/local ; brew install libgit2; fi
+  - ps ax | grep Rserve
   
 after_success:
   - if [[ "$TRAVIS_R_VERSION_STRING" == "release" && ("$TRAVIS_OS_NAME" == "linux") ]]; then Rscript -e 'covr::codecov()'; fi
