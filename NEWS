@@ -1,6 +1,11 @@
  NEWS/Changelog for Rserve
 ---------------------------
 
+1.7-5	(bugfix branch)
+    o	backport fix for R 3.5 (from 1.8 branch) using XLENGTH 
+    instead of LENGTH for some obects size.
+    
+    
 1.7-4	(bugfix branch)
     o	compatibility fix for Solaris; silence a warning on Windows
 
