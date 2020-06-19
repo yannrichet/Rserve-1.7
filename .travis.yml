@@ -1,57 +1,49 @@
 language: r
 r:
-  - oldrel
-  - release
+- oldrel
+- release
 r_packages:
-#  - RSclient
-  - covr
+- covr
 warnings_are_errors: false
 os:
-  - linux
-  - osx
+- linux
+- osx
 env:
-  - RSERVE=Rserve
+- RSERVE=Rserve
 branches:
-  only:
-    master
-    
+  only: master
 addons:
   apt:
     packages:
-      - libssh2-1-dev
-
+    - libssh2-1-dev
 before_install:
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sudo chown -R $(whoami) /usr/local ; brew install libgit2; fi
-  
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sudo chown -R $(whoami) /usr/local ; brew
+  install libgit2; fi
 before_script:
-  - echo `ls -la`
-  - cd ..; mv Rserve* Rserve; cd Rserve; sh mkdist -i
-  - echo `ls -la`
-  - cd ..; mv Rserve Rserve-src; tar zxvf Rserve_*.tar.gz; cd Rserve
-  - echo `ls -la`
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export LDFLAGS="-L/usr/local/opt/openssl@1.1/lib"; export CPPFLAGS="-I/usr/local/opt/openssl@1.1/include"; fi
-
+- echo `ls -la`
+- cd ..; mv Rserve* Rserve; cd Rserve; sh mkdist -i
+- echo `ls -la`
+- cd ..; mv Rserve Rserve-src; tar zxvf Rserve_*.tar.gz; cd Rserve
+- echo `ls -la`
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export LDFLAGS="-L/usr/local/opt/openssl@1.1/lib";
+  export CPPFLAGS="-I/usr/local/opt/openssl@1.1/include"; fi
 after_script:
-  - ps ax | grep Rserve
-  - cd tests; bash test-RserveBugJava.sh || travis_terminate 1;
-  - ps ax | grep Rserve
-  
+- ps ax | grep Rserve
+- cd tests; bash test-RserveBugJava.sh || travis_terminate 1;
+- ps ax | grep Rserve
 after_success:
-  - if [[ "$TRAVIS_R_VERSION_STRING" == "release" && ("$TRAVIS_OS_NAME" == "linux") ]]; then Rscript -e 'covr::codecov()'; fi
-  
+- if [[ "$TRAVIS_R_VERSION_STRING" == "release" && ("$TRAVIS_OS_NAME" == "linux")
+  ]]; then Rscript -e 'covr::codecov()'; fi
 before_deploy:
-  - if [[ "$TRAVIS_R_VERSION_STRING" == "release" ]]; then git tag "$TRAVIS_OS_NAME" --force; fi
-  - if [[ "$TRAVIS_R_VERSION_STRING" == "release" && ("$TRAVIS_OS_NAME" == "osx") ]]; then R CMD INSTALL --build $PKG_TARBALL; fi
-
+- if [[ "$TRAVIS_R_VERSION_STRING" == "release" ]]; then git tag "$TRAVIS_OS_NAME"
+  --force; fi
+- if [[ "$TRAVIS_R_VERSION_STRING" == "release" && ("$TRAVIS_OS_NAME" == "osx") ]];
+  then R CMD INSTALL --build $PKG_TARBALL; fi
 deploy:
   provider: releases
-  name: "$TRAVIS_OS_NAME"
   api_key:
-    secure: "lxbU0MSoVH7cduiL/fw6kZHT5Y/dsZE+RvbPohOPNKgh7NrvR+ztf10Y96uDcrDp14GS1pyrUqZjKYA21m2X4ntPzCZcoTl3yw6/BgGD9U7Mbv7/j85c5qnGXHjHN0gFXkOjj9CKjjauHIB7DvRHbWZD4M9eLyHlrwSD0PUxQkYa6O4rQsUEuICKNFdGcvbybHyzG7TG3/L7EiXpdMw9SPpQtIvF2AdhNu5ldsgqBCtGNx/3jPVV5/TIEuORXmHB+xcBPftK0Yz90yueYdLwFkGD8gQWswqdq7HR1oEel8bAvYCNDLxeOBRHHkk8MnlP1SkLQCjLKqdBC+JhwbindP6Bkg9FU8tfLshn0vtZq1ctitEFQ+Fjsocryc+1dotLd/t6QquBalZytlcLIU5Om163hZsANdTcjLTl/QWZFnsD0pgpYDbCmKMgNrgpe3yZhLWW+EUi0nAikdvLzwKcqi4KnGiV2HmxM1xT7NkCzA8IxKFgrKYG2F7SOANsg3YmG8dsVVXn2gt3tGfE3oBcLlRTbIf6wgvU4hrFOzUTARp+c9b3BP9IKI0qNEszgI4gD6A3fqefGysk4d/NiEyQujWxhwdAtI+JfjynX7h1iXv0X4fZfwwH5E33Oi0e7CfsmkkmHA+CQVZvVNh3QxdjScKaiRUO9Y/r4qDtJOToZJs="
-  file_glob: true
-  file: Rserve*.t*gz
-  skip_cleanup: true
-  overwrite: true
+    secure: cNa7gQFvJ7ck8RawhSt6TOSjLCi3R+EDWGtgeTMsWgUSFIWuoo+vMfrYLjMmMqLpaQOhjglCDjDUfty/fNbU+w3QZLB9LfoKHtOOhpWxrXvwWTa2GJtLraVQmtqdFRPergAJAEU+zxPp9IzWXr/vTg+7VaHolC6ysLG0XkCD8CkccLn2J+nE3j8RIwuuWkw/TZYC9SysAaZSpaYNsXtCprkoRM0tko1I5/rK3/NJhooFFvh2Op2mnOO8o6VPJvi2paIntEnQmzrUC9xhWVNeN4CQyhBkg/QVjgXGcOFXB/N4iya3UPD3XxoTbQzi7WqIQztJUp0CGBGe9RAufcvvq5xDZZq/98GeH9stab+GllmawQAAOlMokrT7vfPwdBpo08U9mbq/kS281rSQq6FMUONbU03ugE9OLSqZB8On6KZuWz2e7azBTcgiytULcZwLbscg1rvP3AyKKeN4OxTM2UkmWw7syuMC+WrgH8a7lkP+ZczCzKB+mhfdvrEAnBPTUqoa9MTbSkY+dhR537fJG1f3Oo8ROBzNNcpM/m3YhNIN7c5rUecMUQPLsId/BpozOiHvSyh0I8mFpoPnFjhYGh9eMMSHqiv0KK5AnArcTCaryT5VE5OPmyloRmdLjGUNZuiA6CEztzTifN6kBpcSbFu5D33ZCP8R9JO4qiAkFuk=
+  file: Rserve*
   on:
-    branch: master
-    except: windows
+    repo: yannrichet/Rserve-1.7
+  skip_cleanup: 'true'
