@@ -2,9 +2,9 @@ language: r
 r:
   - oldrel
   - release
-r_packages:
+#r_packages:
 #  - RSclient
-  - covr
+#  - covr
 warnings_are_errors: false
 os:
   - linux
@@ -37,10 +37,9 @@ after_script:
   - ps ax | grep Rserve
   
 after_success:
-  - if [[ "$TRAVIS_R_VERSION_STRING" == "release" && ("$TRAVIS_OS_NAME" == "linux") ]]; then Rscript -e 'covr::codecov()'; fi
+  - if [[ "$TRAVIS_R_VERSION_STRING" == "release" && ("$TRAVIS_OS_NAME" == "linux") ]]; then Rscript -e 'install.packages("covr", repos="https://cran.rstudio.com"); covr::codecov()'; fi
   
 before_deploy:
-  - if [[ "$TRAVIS_R_VERSION_STRING" == "release" ]]; then git tag "$TRAVIS_OS_NAME" --force; fi
   - if [[ "$TRAVIS_R_VERSION_STRING" == "release" && ("$TRAVIS_OS_NAME" == "osx") ]]; then R CMD INSTALL --build $PKG_TARBALL; fi
 
 deploy:
@@ -53,5 +52,6 @@ deploy:
   skip_cleanup: true
   overwrite: true
   on:
+    tags: true
     branch: master
     except: windows
