@@ -3,7 +3,7 @@ r:
   - oldrel
   - release
 r_packages:
-  - RSclient
+#  - RSclient
   - covr
 warnings_are_errors: false
 os:
@@ -21,7 +21,7 @@ addons:
       - libssh2-1-dev
 
 before_install:
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sudo chown -R $(whoami) /usr/local ; brew install libgit2 openssl; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sudo chown -R $(whoami) /usr/local ; brew install libgit2 openssl; cd /usr/local/include; ln -s ../opt/openssl/include/openssl .; fi
   
 before_script:
   - echo `ls -la`
