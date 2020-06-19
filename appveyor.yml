@@ -7,7 +7,9 @@ init:
         Invoke-WebRequest http://raw.github.com/krlmlr/r-appveyor/master/scripts/appveyor-tool.ps1 -OutFile "..\appveyor-tool.ps1"
         Import-Module '..\appveyor-tool.ps1'
 install:
-  - ps: choco install -y miktex --version 2.9.7442
+  - ps: |
+          choco install -y miktex.install --version 2.9.7442
+          choco install -y miktex
   - cmd: refreshenv
   - ps: Bootstrap
 
