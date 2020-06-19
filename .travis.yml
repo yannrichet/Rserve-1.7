@@ -21,7 +21,7 @@ addons:
       - libssh2-1-dev
 
 before_install:
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sudo chown -R $(whoami) /usr/local ; brew install libgit2 openssl; cd /usr/local/include; ln -s ../opt/openssl/include/openssl .; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sudo chown -R $(whoami) /usr/local ; brew install libgit2; fi
   
 before_script:
   - echo `ls -la`
@@ -29,6 +29,7 @@ before_script:
   - echo `ls -la`
   - cd ..; mv Rserve Rserve-src; tar zxvf Rserve_*.tar.gz; cd Rserve
   - echo `ls -la`
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export LDFLAGS="-L/usr/local/opt/openssl@1.1/lib"; export CPPFLAGS="-I/usr/local/opt/openssl@1.1/include"; fi
 
 after_script:
   - ps ax | grep Rserve
