@@ -21,7 +21,7 @@ addons:
       - libssh2-1-dev
 
 before_install:
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sudo chown -R $(whoami) /usr/local ; brew install libgit2; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sudo chown -R $(whoami) /usr/local ; brew install libgit2 openssl; fi
   
 before_script:
   - echo `ls -la`
