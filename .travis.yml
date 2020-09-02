@@ -33,41 +33,41 @@ matrix:
 before_install:
   - > 
     if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then 
-      #sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9; fi
-      if [[ "$R_version" == "3.6" ]]; then 
-        echo "deb https://cloud.r-project.org/bin/linux/ubuntu xenial-cran35/" | sudo tee -a /etc/apt/sources.list;
-      else 
-        echo "deb https://cloud.r-project.org/bin/linux/ubuntu xenial-cran40/" | sudo tee -a /etc/apt/sources.list; 
-      fi
-      sudo apt-get update -qq --allow-unauthenticated;
-      sudo apt-get install r-recommended --allow-unauthenticated -y;
+    #sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9; fi
+    if [[ "$R_version" == "3.6" ]]; then 
+    echo "deb https://cloud.r-project.org/bin/linux/ubuntu xenial-cran35/" | sudo tee -a /etc/apt/sources.list;
+    else 
+    echo "deb https://cloud.r-project.org/bin/linux/ubuntu xenial-cran40/" | sudo tee -a /etc/apt/sources.list; 
+    fi;
+    sudo apt-get update -qq --allow-unauthenticated;
+    sudo apt-get install r-recommended --allow-unauthenticated -y;
     fi
   - >
     if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then 
-      export HOMEBREW_NO_AUTO_UPDATE=1; 
-      rm -f '/usr/local/include/c++'; 
-      if [[ "$R_version" == "3.6" ]]; then 
-        #brew install r;
-        wd=$PWD;
-        cd /usr/local/Homebrew/Library/Taps/homebrew/homebrew-core;
-        git reset --hard c3a244c627e;
-        git checkout -b r-3.6.3;
-        cd $wd;
-      else
-        brew install r;
-      fi
-      RH=`ls /usr/local/Cellar/r/`;
-      echo `ls /usr/local/Cellar/r/$RH/bin`;
-      export PATH=$PATH:/usr/local/Cellar/r/$RH/bin; 
-      brew install libgit2
+    export HOMEBREW_NO_AUTO_UPDATE=1; 
+    rm -f '/usr/local/include/c++'; 
+    if [[ "$R_version" == "3.6" ]]; then 
+    #brew install r;
+    wd=$PWD;
+    cd /usr/local/Homebrew/Library/Taps/homebrew/homebrew-core;
+    git reset --hard c3a244c627e;
+    git checkout -b r-3.6.3;
+    cd $wd;
+    else
+    brew install r;
+    fi;
+    RH=`ls /usr/local/Cellar/r/`;
+    echo `ls /usr/local/Cellar/r/$RH/bin`;
+    export PATH=$PATH:/usr/local/Cellar/r/$RH/bin; 
+    brew install libgit2
     fi
   - >
     if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then
-      if [[ "$R_version" == "3.6" ]]; then 
-        choco install r --version 3.6; fi
-      else
-        choco install r --version 4.0; fi
-      fi
+    if [[ "$R_version" == "3.6" ]]; then 
+    choco install r --version 3.6; fi
+    else
+    choco install r --version 4.0; fi
+    fi;
     fi
 
 env:
