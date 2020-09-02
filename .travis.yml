@@ -58,14 +58,14 @@ before_install:
     RH=`ls /usr/local/Cellar/r/`;
     echo `ls /usr/local/Cellar/r/$RH/bin`;
     export PATH=$PATH:/usr/local/Cellar/r/$RH/bin; 
-    brew install libgit2
+    brew install libgit2;
     fi
   - >
     if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then
     if [[ "$R_version" == "3.6" ]]; then 
-    choco install r --version 3.6; fi
+    choco install r --version 3.6;
     else
-    choco install r --version 4.0; fi
+    choco install r --version 4.0;
     fi;
     fi
 
