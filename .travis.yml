@@ -45,8 +45,7 @@ before_install:
     if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then 
     export HOMEBREW_NO_AUTO_UPDATE=1; 
     rm -f '/usr/local/include/c++'; 
-    if [[ "$R_version" == "3.6" ]]; then 
-    #brew install r;
+    if [[ "$R_version" == "3.6" ]]; then
     wd=$PWD;
     cd /usr/local/Homebrew/Library/Taps/homebrew/homebrew-core;
     git reset --hard c3a244c627e;
