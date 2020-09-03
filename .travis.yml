@@ -76,9 +76,9 @@ branches:
     
 before_script:
   - echo `ls -la`
-  - cd ..; mv Rserve* Rserve; cd Rserve; sh mkdist -i
+  - cd ..; echo `ls -la`; mv Rserve* Rserve; cd Rserve; sh mkdist -i
   - echo `ls -la`
-  - cd ..; mv Rserve Rserve-src; tar zxvf Rserve_*.tar.gz; cd Rserve
+  - cd ..; echo `ls -la`; mv Rserve Rserve-src; tar zxvf Rserve_*.tar.gz; cd Rserve
   - echo `ls -la`
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export LDFLAGS="-L/usr/local/opt/openssl@1.1/lib"; export CPPFLAGS="-I/usr/local/opt/openssl@1.1/include"; fi
 
