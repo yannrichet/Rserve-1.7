@@ -23,6 +23,10 @@ jobs:
         r-version: ${{ matrix.R }}
     - if: matrix.os == 'macos-latest' && matrix.R == '3.6'
       run: ln -s /Library/Frameworks/R.framework/Versions/3.6 /Library/Frameworks/R.framework/Versions/3.5
+    - if: matrix.os != 'windows-latest'
+      run: export RSERVE_TMPDIR=$HOME/Rserve.tmp
+    - if: matrix.os == 'windows-latest'
+      run: export RSERVE_TMPDIR=$HOMEPATH/Rserve.tmp
     - run: |
         echo `pwd`; \
         sh mkdist -i; \
