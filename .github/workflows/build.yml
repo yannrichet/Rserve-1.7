@@ -31,7 +31,6 @@ jobs:
         echo `ls -la`; \
         cd ..; tar zxvf Rserve_*.tar.gz; \
         echo `ls -la`; \
-        #if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export LDFLAGS="-L/usr/local/opt/openssl@1.1/lib"; export CPPFLAGS="-I/usr/local/opt/openssl@1.1/include"; fi
       shell: bash
 
   test:
@@ -57,7 +56,6 @@ jobs:
         echo `ls -la`; \
         cd ..; tar zxvf Rserve_*.tar.gz; \
         echo `ls -la`; \
-        #if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export LDFLAGS="-L/usr/local/opt/openssl@1.1/lib"; export CPPFLAGS="-I/usr/local/opt/openssl@1.1/include"; fi
       shell: bash
     - run: |
         ps ax | grep Rserve; \
@@ -67,7 +65,8 @@ jobs:
       shell: bash
     - if: matrix.os == 'ubuntu-latest' 
       run: |
-        sudo apt install -y libcurl4-openssl-dev
+        sudo apt install -y libcurl4-openssl-dev; \
+        Rscript -e 'install.packages("RSClient", repos="https://cran.rstudio.com"); \
         Rscript -e 'install.packages("covr", repos="https://cran.rstudio.com"); covr::codecov()'
 
       
@@ -94,12 +93,11 @@ jobs:
         echo `ls -la`; \
         cd ..; tar zxvf Rserve_*.tar.gz; \
         echo `ls -la`; \
-        #if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export LDFLAGS="-L/usr/local/opt/openssl@1.1/lib"; export CPPFLAGS="-I/usr/local/opt/openssl@1.1/include"; fi
       shell: bash
     - run: |
         echo `ls -la`; \
         cd ..; R CMD INSTALL --build Rserve_1.7-5.tar.gz ; \
-        mv Rserve_1.7-5.tar.gz Rserve-1.7/.
+        mv Rserve_*.* Rserve-1.7/.
       shell: bash
     - uses: actions/upload-artifact@v2
       with:
