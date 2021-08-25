@@ -68,7 +68,7 @@ jobs:
       run: |
         tasklist /FI "IMAGENAME eq Rserve.exe"
         cd ..\Rserve-1.7\tests
-        test-RserveBugJava.bat
+        cmd.exe test-RserveBugJava.bat
         tasklist /FI "IMAGENAME eq Rserve.exe"
     - if: matrix.os == 'ubuntu-latest' 
       run: |
