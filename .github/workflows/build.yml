@@ -21,6 +21,8 @@ jobs:
     - uses: r-lib/actions/setup-r@v1
       with:
         r-version: ${{ matrix.R }}
+    - if: matrix.os == 'macos-latest'
+      run: brew install automake
     - if: matrix.os == 'macos-latest' && matrix.R == '3.6'
       run: ln -s /Library/Frameworks/R.framework/Versions/3.6 /Library/Frameworks/R.framework/Versions/3.5
     - run: |
@@ -45,6 +47,8 @@ jobs:
     - uses: r-lib/actions/setup-r@v1
       with:
         r-version: ${{ matrix.R }}
+    - if: matrix.os == 'macos-latest'
+      run: brew install automake
     - if: matrix.os == 'macos-latest' && matrix.R == '3.6'
       run: ln -s /Library/Frameworks/R.framework/Versions/3.6 /Library/Frameworks/R.framework/Versions/3.5
     - run: |
@@ -78,6 +82,8 @@ jobs:
     - uses: r-lib/actions/setup-r@v1
       with:
         r-version: ${{ matrix.R }}
+    - if: matrix.os == 'macos-latest'
+      run: brew install automake
     - if: matrix.os == 'macos-latest' && matrix.R == '3.6'
       run: ln -s /Library/Frameworks/R.framework/Versions/3.6 /Library/Frameworks/R.framework/Versions/3.5
     - run: |
