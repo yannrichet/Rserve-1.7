@@ -24,11 +24,11 @@ jobs:
     - if: matrix.os == 'macos-latest' && matrix.R == '3.6'
       run: ln -s /Library/Frameworks/R.framework/Versions/3.6 /Library/Frameworks/R.framework/Versions/3.5
     - run: |
-        echo `pwd` \
-        cd ..; echo `ls -la`; mv Rserve-1.7 Rserve; cd Rserve; echo `ls -la`; sh mkdist -i \
-        echo `ls -la` \
-        cd ..; echo `ls -la`; mv Rserve Rserve-src; tar zxvf Rserve_*.tar.gz; cd Rserve \
-        echo `ls -la` \
+        echo `pwd`; \
+        cd ..; echo `ls -la`; mv Rserve-1.7 Rserve; cd Rserve; echo `ls -la`; sh mkdist -i; \
+        echo `ls -la`; \
+        cd ..; echo `ls -la`; mv Rserve Rserve-src; tar zxvf Rserve_*.tar.gz; cd Rserve; \
+        echo `ls -la`; \
         #if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export LDFLAGS="-L/usr/local/opt/openssl@1.1/lib"; export CPPFLAGS="-I/usr/local/opt/openssl@1.1/include"; fi
 
 #  test:
