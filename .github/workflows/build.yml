@@ -58,7 +58,7 @@ jobs:
     - run: |
         ps ax | grep Rserve; \
         echo `ls -la`; \
-        cd Rserve-1.7/tests; bash test-RserveBugJava.sh || exit 1; \
+        cd ..; cd Rserve-1.7/tests; bash test-RserveBugJava.sh || exit 1; \
         ps ax | grep Rserve
       shell: bash
     - if: matrix.os == 'ubuntu-latest' 
@@ -90,7 +90,7 @@ jobs:
       shell: bash
     - run: |
         echo `ls -la`; \
-        R CMD INSTALL --build Rserve_1.7-5.tar.gz
+        cd ..; R CMD INSTALL --build Rserve_1.7-5.tar.gz
     - uses: actions/upload-artifact@v2
       with:
         path: target
