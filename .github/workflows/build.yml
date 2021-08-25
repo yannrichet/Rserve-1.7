@@ -66,7 +66,7 @@ jobs:
     - if: matrix.os == 'ubuntu-latest' 
       run: |
         sudo apt install -y libcurl4-openssl-dev; \
-        Rscript -e 'install.packages("RSClient", repos="https://cran.rstudio.com"); \
+        Rscript -e 'install.packages("RSClient", repos="https://cran.rstudio.com");' \
         Rscript -e 'install.packages("covr", repos="https://cran.rstudio.com"); covr::codecov()'
 
       
