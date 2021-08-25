@@ -67,7 +67,7 @@ jobs:
       shell: bash
     - if: matrix.os == 'ubuntu-latest' 
       run: |
-        apt install -y libcurl4-openssl-dev
+        sudo apt install -y libcurl4-openssl-dev
         Rscript -e 'install.packages("covr", repos="https://cran.rstudio.com"); covr::codecov()'
 
       
@@ -103,14 +103,14 @@ jobs:
     - uses: actions/upload-artifact@v2
       with:
         path: |
-          Rserve*.t*gz
-          Rserve*.zip
+          ../Rserve*.t*gz
+          ../Rserve*.zip
     - uses: softprops/action-gh-release@v1
       if: startsWith(github.ref, 'refs/tags/')
       with:
         files: |
-          Rserve*.t*gz
-          Rserve*.zip
+          ../Rserve*.t*gz
+          ../Rserve*.zip
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     
