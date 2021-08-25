@@ -57,16 +57,23 @@ jobs:
         cd ..; tar zxvf Rserve_*.tar.gz; \
         echo `ls -la`; \
       shell: bash
-    - run: |
+    - if: matrix.os != 'windows-latest' 
+      run: |
         ps ax | grep Rserve; \
         echo `ls -la`; \
         cd ..; cd Rserve-1.7/tests; bash test-RserveBugJava.sh || exit 1; \
         ps ax | grep Rserve
       shell: bash
+    - if: matrix.os == 'windows-latest' 
+      run: |
+        tasklist /FI "IMAGENAME eq Rserve.exe"
+        cd ..\Rserve-1.7\tests
+        test-RserveBugJava.bat
+        tasklist /FI "IMAGENAME eq Rserve.exe"
     - if: matrix.os == 'ubuntu-latest' 
       run: |
         sudo apt install -y libcurl4-openssl-dev; \
-        Rscript -e 'install.packages("RSClient", repos="https://cran.rstudio.com");' \
+        Rscript -e 'install.packages("RSclient", repos="https://cran.rstudio.com");' \
         Rscript -e 'install.packages("covr", repos="https://cran.rstudio.com"); covr::codecov()'
 
       
