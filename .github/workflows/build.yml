@@ -66,7 +66,9 @@ jobs:
         ps ax | grep Rserve
       shell: bash
     - if: matrix.os == 'ubuntu-latest' 
-      run: Rscript -e 'install.packages("covr", repos="https://cran.rstudio.com"); covr::codecov()'
+      run: |
+        apt install -y libcurl4-openssl-dev
+        Rscript -e 'install.packages("covr", repos="https://cran.rstudio.com"); covr::codecov()'
 
       
   release:
@@ -97,9 +99,12 @@ jobs:
     - run: |
         echo `ls -la`; \
         cd ..; R CMD INSTALL --build Rserve_1.7-5.tar.gz
+      shell: bash
     - uses: actions/upload-artifact@v2
       with:
-        path: target
+        path: |
+          Rserve*.t*gz
+          Rserve*.zip
     - uses: softprops/action-gh-release@v1
       if: startsWith(github.ref, 'refs/tags/')
       with:
