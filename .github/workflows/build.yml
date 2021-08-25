@@ -23,11 +23,6 @@ jobs:
         r-version: ${{ matrix.R }}
     - if: matrix.os == 'macos-latest' && matrix.R == '3.6'
       run: ln -s /Library/Frameworks/R.framework/Versions/3.6 /Library/Frameworks/R.framework/Versions/3.5
-    - if: matrix.os != 'windows-latest'
-      run: echo "RSERVE_TMPDIR=$HOME/Rserve.tmp" >> $GITHUB_ENV
-    - if: matrix.os == 'windows-latest'
-      run: echo "RSERVE_TMPDIR=$HOMEPATH\\Rserve.tmp" >> $GITHUB_ENV
-      shell: bash
     - run: |
         echo `pwd`; \
         sh mkdist -i; \
@@ -35,6 +30,7 @@ jobs:
         cd ..; tar zxvf Rserve_*.tar.gz; \
         echo `ls -la`; \
         #if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export LDFLAGS="-L/usr/local/opt/openssl@1.1/lib"; export CPPFLAGS="-I/usr/local/opt/openssl@1.1/include"; fi
+      shell: bash
 
 #  test:
 #    strategy:

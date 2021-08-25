@@ -1,10 +1,11 @@
 #!/bin/sh
 
 echo "RSERVE:$RSERVE"
-#RSERVE_TMPDIR=/tmp/Rserve.tmp
-echo "RSERVE_TMPDIR:$RSERVE_TMPDIR"
 
 SWD=`pwd`
+
+RSERVE_TMPDIR="$SWD/../Rserve.tmp"
+echo "RSERVE_TMPDIR:$RSERVE_TMPDIR"
 
 echo "Removing previous dist ..."
 rm -rf $RSERVE_TMPDIR
