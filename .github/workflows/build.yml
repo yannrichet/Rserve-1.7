@@ -26,7 +26,7 @@ jobs:
     - if: matrix.os != 'windows-latest'
       run: echo "RSERVE_TMPDIR=$HOME/Rserve.tmp" >> $GITHUB_ENV
     - if: matrix.os == 'windows-latest'
-      run: echo "RSERVE_TMPDIR=$HOMEPATH/Rserve.tmp" >> $GITHUB_ENV
+      run: echo "RSERVE_TMPDIR=$HOMEPATH\\Rserve.tmp" >> $GITHUB_ENV
       shell: bash
     - run: |
         echo `pwd`; \
