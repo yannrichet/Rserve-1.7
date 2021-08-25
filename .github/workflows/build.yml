@@ -15,7 +15,7 @@ jobs:
         R: [3.6, 4.0, 4.1]
     runs-on: ${{ matrix.os }}
     env:
-      RSERVE: Rserve
+      RSERVE: Rserve-1.7
     steps:
     - uses: actions/checkout@v2
     - uses: r-lib/actions/setup-r@v1
@@ -25,9 +25,9 @@ jobs:
       run: ln -s /Library/Frameworks/R.framework/Versions/3.6 /Library/Frameworks/R.framework/Versions/3.5
     - run: |
         echo `pwd`; \
-        cd ..; echo `ls -la`; mv Rserve-1.7 Rserve; cd Rserve; echo `ls -la`; sh mkdist -i; \
+        sh mkdist -i; \
         echo `ls -la`; \
-        cd ..; echo `ls -la`; mv Rserve Rserve-src; tar zxvf Rserve_*.tar.gz; cd Rserve; \
+        cd ..; tar zxvf Rserve_*.tar.gz; \
         echo `ls -la`; \
         #if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export LDFLAGS="-L/usr/local/opt/openssl@1.1/lib"; export CPPFLAGS="-I/usr/local/opt/openssl@1.1/include"; fi
 
