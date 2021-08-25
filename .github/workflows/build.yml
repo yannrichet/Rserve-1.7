@@ -25,7 +25,7 @@ jobs:
       run: ln -s /Library/Frameworks/R.framework/Versions/3.6 /Library/Frameworks/R.framework/Versions/3.5
     - run: |
         echo `pwd` \
-        cd ..; echo `ls -la`; mv Rserve* Rserve; cd Rserve; echo `ls -la`; sh mkdist -i \
+        cd ..; echo `ls -la`; mv Rserve-1.7 Rserve; cd Rserve; echo `ls -la`; sh mkdist -i \
         echo `ls -la` \
         cd ..; echo `ls -la`; mv Rserve Rserve-src; tar zxvf Rserve_*.tar.gz; cd Rserve \
         echo `ls -la` \
