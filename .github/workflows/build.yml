@@ -57,6 +57,7 @@ jobs:
       shell: bash
     - run: |
         ps ax | grep Rserve; \
+        echo `ls -la`; \
         cd Rserve-1.7/tests; bash test-RserveBugJava.sh || exit 1; \
         ps ax | grep Rserve
       shell: bash
@@ -87,7 +88,9 @@ jobs:
         echo `ls -la`; \
         #if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export LDFLAGS="-L/usr/local/opt/openssl@1.1/lib"; export CPPFLAGS="-I/usr/local/opt/openssl@1.1/include"; fi
       shell: bash
-    - run: R CMD INSTALL --build Rserve_1.7-5.tar.gz
+    - run: |
+        echo `ls -la`; \
+        R CMD INSTALL --build Rserve_1.7-5.tar.gz
     - uses: actions/upload-artifact@v2
       with:
         path: target
