@@ -32,70 +32,73 @@ jobs:
         #if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export LDFLAGS="-L/usr/local/opt/openssl@1.1/lib"; export CPPFLAGS="-I/usr/local/opt/openssl@1.1/include"; fi
       shell: bash
 
-#  test:
-#    strategy:
-#      matrix:
-#        os: [ubuntu-latest, windows-latest, macOS-latest]
-#        R: [3.6, 4.0, 4.1]
-#    runs-on: ${{ matrix.os }}
-#    env:
-#      RSERVE: Rserve
-#    steps:
-#    - uses: actions/checkout@v2
-#    - uses: r-lib/actions/setup-r@v1
-#      with:
-#        r-version: ${{ matrix.R }}
-#    - run: ln -s /Library/Frameworks/R.framework/Versions/3.6 /Library/Frameworks/R.framework/Versions/3.5
-#      if: matrix.os == 'macos-latest' && ${{ matrix.R }} == '3.6'
-#    - run: |
-#        echo `ls -la` \
-#        cd ..; echo `ls -la`; mv Rserve* Rserve; cd Rserve; echo `ls -la`; sh mkdist -i \
-#        echo `ls -la` \
-#        cd ..; echo `ls -la`; mv Rserve Rserve-src; tar zxvf Rserve_*.tar.gz; cd Rserve \
-#        echo `ls -la` \
-#        #if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export LDFLAGS="-L/usr/local/opt/openssl@1.1/lib"; export CPPFLAGS="-I/usr/local/opt/openssl@1.1/include"; fi
-#    - run: |
-#        ps ax | grep Rserve \
-#        cd tests; bash test-RserveBugJava.sh || exit 1; \
-#        ps ax | grep Rserve
-#    - if: matrix.os == 'ubuntu-latest' 
-#      run: Rscript -e 'install.packages("covr", repos="https://cran.rstudio.com"); covr::codecov()'
-#
-#      
-#  release:
-#    strategy:
-#      matrix:
-#        os: [ubuntu-latest, windows-latest, macOS-latest]
-#        R: [3.6, 4.0, 4.1]
-#    runs-on: ${{ matrix.os }}
-#    env:
-#      RSERVE: Rserve
-#    steps:
-#    - uses: actions/checkout@v2
-#    - uses: r-lib/actions/setup-r@v1
-#      with:
-#        r-version: ${{ matrix.R }}
-#    - if: matrix.os == 'macos-latest' && matrix.R == '3.6'
-#      run: ln -s /Library/Frameworks/R.framework/Versions/3.6 /Library/Frameworks/R.framework/Versions/3.5
-#    - run: |
-#        echo `ls -la` \
-#        cd ..; echo `ls -la`; mv Rserve* Rserve; cd Rserve; echo `ls -la`; sh mkdist -i \
-#        echo `ls -la` \
-#        cd ..; echo `ls -la`; mv Rserve Rserve-src; tar zxvf Rserve_*.tar.gz; cd Rserve \
-#        echo `ls -la` \
-#        #if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export LDFLAGS="-L/usr/local/opt/openssl@1.1/lib"; export CPPFLAGS="-I/usr/local/opt/openssl@1.1/include"; fi
-#    - run: R CMD INSTALL --build $PKG_TARBALL
-#    - uses: actions/upload-artifact@v2
-#      with:
-#        path: target
-#    - uses: softprops/action-gh-release@v1
-#      if: startsWith(github.ref, 'refs/tags/')
-#      with:
-#        files: |
-#          Rserve*.t*gz
-#          Rserve*.zip
-#      env:
-#        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  test:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macOS-latest]
+        R: [3.6, 4.0, 4.1]
+    runs-on: ${{ matrix.os }}
+    env:
+      RSERVE: Rserve-1.7
+    steps:
+    - uses: actions/checkout@v2
+    - uses: r-lib/actions/setup-r@v1
+      with:
+        r-version: ${{ matrix.R }}
+    - if: matrix.os == 'macos-latest' && matrix.R == '3.6'
+      run: ln -s /Library/Frameworks/R.framework/Versions/3.6 /Library/Frameworks/R.framework/Versions/3.5
+    - run: |
+        echo `pwd`; \
+        sh mkdist -i; \
+        echo `ls -la`; \
+        cd ..; tar zxvf Rserve_*.tar.gz; \
+        echo `ls -la`; \
+        #if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export LDFLAGS="-L/usr/local/opt/openssl@1.1/lib"; export CPPFLAGS="-I/usr/local/opt/openssl@1.1/include"; fi
+      shell: bash
+    - run: |
+        ps ax | grep Rserve \
+        cd tests; bash test-RserveBugJava.sh || exit 1; \
+        ps ax | grep Rserve
+      shell: bash
+    - if: matrix.os == 'ubuntu-latest' 
+      run: Rscript -e 'install.packages("covr", repos="https://cran.rstudio.com"); covr::codecov()'
+
+      
+  release:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macOS-latest]
+        R: [3.6, 4.0, 4.1]
+    runs-on: ${{ matrix.os }}
+    env:
+      RSERVE: Rserve-1.7
+    steps:
+    - uses: actions/checkout@v2
+    - uses: r-lib/actions/setup-r@v1
+      with:
+        r-version: ${{ matrix.R }}
+    - if: matrix.os == 'macos-latest' && matrix.R == '3.6'
+      run: ln -s /Library/Frameworks/R.framework/Versions/3.6 /Library/Frameworks/R.framework/Versions/3.5
+    - run: |
+        echo `pwd`; \
+        sh mkdist -i; \
+        echo `ls -la`; \
+        cd ..; tar zxvf Rserve_*.tar.gz; \
+        echo `ls -la`; \
+        #if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export LDFLAGS="-L/usr/local/opt/openssl@1.1/lib"; export CPPFLAGS="-I/usr/local/opt/openssl@1.1/include"; fi
+      shell: bash
+    - run: R CMD INSTALL --build $PKG_TARBALL
+    - uses: actions/upload-artifact@v2
+      with:
+        path: target
+    - uses: softprops/action-gh-release@v1
+      if: startsWith(github.ref, 'refs/tags/')
+      with:
+        files: |
+          Rserve*.t*gz
+          Rserve*.zip
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     
     
     
