@@ -104,18 +104,16 @@ jobs:
     - run: |
         echo `ls -la`; \
         cd ..; R CMD INSTALL --build Rserve_1.7-5.tar.gz ; \
-        mkdir Rserve-1.7/${{ matrix.os }}-R${{ matrix.R }}
-        mv Rserve_*.* Rserve-1.7/${{ matrix.os }}-R${{ matrix.R }}/.
+        mkdir Rserve-1.7/R${{ matrix.R }}
+        mv Rserve_*.* Rserve-1.7/R-${{ matrix.R }}/.
       shell: bash
     - uses: actions/upload-artifact@v2
       with:
-        path: ./*-latest-*
+        path: ./R-*
     - uses: softprops/action-gh-release@v1
       if: startsWith(github.ref, 'refs/tags/')
       with:
-        files: |
-          Rserve*.t*gz
-          Rserve*.zip
+        files: ./R-*
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     
