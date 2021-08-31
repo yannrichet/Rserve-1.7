@@ -104,7 +104,7 @@ jobs:
     - run: |
         echo `ls -la`; \
         cd ..; R CMD INSTALL --build Rserve_1.7-5.tar.gz ; \
-        mkdir Rserve-1.7/R${{ matrix.R }}
+        mkdir Rserve-1.7/R-${{ matrix.R }}
         mv Rserve_*.* Rserve-1.7/R-${{ matrix.R }}/.
       shell: bash
     - uses: actions/upload-artifact@v2
