@@ -1,0 +1,121 @@
+name: Build
+
+on:
+  push:
+    branches: [ master ]
+    tags: [ '*.*' ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macOS-latest]
+        R: [3.6, 4.0, 4.1]
+    runs-on: ${{ matrix.os }}
+    env:
+      RSERVE: Rserve-1.7
+    steps:
+    - uses: actions/checkout@v2
+    - uses: r-lib/actions/setup-r@v1
+      with:
+        r-version: ${{ matrix.R }}
+    - if: matrix.os == 'macos-latest'
+      run: brew install automake
+    - if: matrix.os == 'macos-latest' && matrix.R == '3.6'
+      run: ln -s /Library/Frameworks/R.framework/Versions/3.6 /Library/Frameworks/R.framework/Versions/3.5
+    - run: |
+        echo `pwd`; \
+        sh mkdist -i; \
+        echo `ls -la`; \
+        cd ..; tar zxvf Rserve_*.tar.gz; \
+        echo `ls -la`; \
+      shell: bash
+
+  test:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macOS-latest]
+        R: [3.6, 4.0, 4.1]
+    runs-on: ${{ matrix.os }}
+    env:
+      RSERVE: Rserve-1.7
+    steps:
+    - uses: actions/checkout@v2
+    - uses: r-lib/actions/setup-r@v1
+      with:
+        r-version: ${{ matrix.R }}
+    - if: matrix.os == 'macos-latest'
+      run: brew install automake
+    - if: matrix.os == 'macos-latest' && matrix.R == '3.6'
+      run: ln -s /Library/Frameworks/R.framework/Versions/3.6 /Library/Frameworks/R.framework/Versions/3.5
+    - run: |
+        echo `pwd`; \
+        sh mkdist -i; \
+        echo `ls -la`; \
+        cd ..; tar zxvf Rserve_*.tar.gz; \
+        echo `ls -la`; \
+      shell: bash
+    - if: matrix.os != 'windows-latest' 
+      run: |
+        ps ax | grep Rserve; \
+        echo `ls -la`; \
+        cd ..; cd Rserve-1.7/tests; bash test-RserveBugJava.sh || exit 1; \
+        ps ax | grep Rserve
+      shell: bash
+    - if: matrix.os == 'windows-latest' 
+      run: |
+        tasklist /FI "IMAGENAME eq Rserve.exe";
+        cd ..\Rserve-1.7\tests;
+        cmd.exe test-RserveBugJava.bat;
+        tasklist /FI "IMAGENAME eq Rserve.exe"
+    - if: matrix.os == 'ubuntu-latest' 
+      run: |
+        sudo apt install -y libcurl4-openssl-dev; \
+        Rscript -e 'install.packages("RSclient", repos="https://cran.rstudio.com");' \
+        Rscript -e 'install.packages("covr", repos="https://cran.rstudio.com"); covr::codecov()'
+
+      
+  release:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macOS-latest]
+        R: [3.6, 4.0, 4.1]
+    runs-on: ${{ matrix.os }}
+    env:
+      RSERVE: Rserve-1.7
+    steps:
+    - uses: actions/checkout@v2
+    - uses: r-lib/actions/setup-r@v1
+      with:
+        r-version: ${{ matrix.R }}
+    - if: matrix.os == 'macos-latest'
+      run: brew install automake
+    - if: matrix.os == 'macos-latest' && matrix.R == '3.6'
+      run: ln -s /Library/Frameworks/R.framework/Versions/3.6 /Library/Frameworks/R.framework/Versions/3.5
+    - run: |
+        echo `pwd`; \
+        sh mkdist -i; \
+        echo `ls -la`; \
+        cd ..; tar zxvf Rserve_*.tar.gz; \
+        echo `ls -la`; \
+      shell: bash
+    - run: |
+        echo `ls -la`; \
+        cd ..; R CMD INSTALL --build Rserve_1.7-5.tar.gz ; \
+        mkdir Rserve-1.7/R-${{ matrix.R }}
+        mv Rserve_*.* Rserve-1.7/R-${{ matrix.R }}/.
+      shell: bash
+    - uses: actions/upload-artifact@v2
+      with:
+        path: ./R-*
+    - uses: softprops/action-gh-release@v1
+      if: startsWith(github.ref, 'refs/tags/')
+      with:
+        files: ./R-*
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    
+    
+    

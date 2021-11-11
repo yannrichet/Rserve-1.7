@@ -1,19 +1,22 @@
 #!/bin/sh
 
-echo $RSERVE
+echo "RSERVE:$RSERVE"
 
 SWD=`pwd`
 
+RSERVE_TMPDIR="$SWD/../Rserve.tmp"
+echo "RSERVE_TMPDIR:$RSERVE_TMPDIR"
+
 echo "Removing previous dist ..."
-rm -rf /tmp/Rserve.tmp
+rm -rf $RSERVE_TMPDIR
 echo "Copying package base ..."
-mkdir /tmp/Rserve.tmp
-cp -r ../$RSERVE /tmp/Rserve.tmp
+mkdir $RSERVE_TMPDIR
+cp -r ../$RSERVE $RSERVE_TMPDIR
 
 #touch /tmp/Rserve/src/dummy.so
-rm -f /tmp/Rserve.tmp/$RSERVE/mkdist
+rm -f $RSERVE_TMPDIR/$RSERVE/mkdist
 
-cd /tmp/Rserve.tmp/$RSERVE
+cd $RSERVE_TMPDIR/$RSERVE
 # mkdir inst
 if [ -e configure ]; then
   echo "Note: configure exists, no attempt to reconfigure will be made."
@@ -39,7 +42,7 @@ if [ -e src/client/cxx/configure.ac ]; then
 	autoheader
 	autoconf
 	rm -rf autom4te* aclocal*
-	cd /tmp/Rserve.tmp/$RSERVE
+	cd $RSERVE_TMPDIR/$RSERVE
     fi
 fi
 
@@ -74,8 +77,8 @@ cd ..
 #R CMD build --force Rserve
 tar fcz Rserve_${VER}.tar.gz $RSERVE*
 cd ${SWD}
-cp /tmp/Rserve.tmp/Rserve_${VER}.tar.gz ..
-rm -rf /tmp/Rserve.tmp
+cp $RSERVE_TMPDIR/Rserve_${VER}.tar.gz ..
+rm -rf $RSERVE_TMPDIR
 echo "Done."
 ls -l ../Rserve_${VER}.tar.gz
 
